@@ -19,7 +19,9 @@ const WhiteTextField = withStyles({
       },
     },
   },
-})((props) => <TextField {...props} />);
+})((props) => (
+  <TextField inputProps={{ style: { color: "white" } }} {...props} />
+));
 
 function Header() {
   const dispatch = useDispatch();
@@ -54,6 +56,7 @@ function Header() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     dispatch(reset());
     getCards();
   };
@@ -70,7 +73,6 @@ function Header() {
           placeholder="Search Anything"
           value={txt}
           onChange={(e) => setTxt(e.target.value)}
-          style={{ borderColor: "white" }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
