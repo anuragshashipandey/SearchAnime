@@ -1,0 +1,15 @@
+body {
+  padding: 2%;
+}
+.searchinput {
+  border-color: "#fff";
+  width: 70%;
+}
+.searchDetails {
+  color: #fff;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background-color: rgb(28, 122, 194);
+}

@@ -1,0 +1,15 @@
+body {
+  padding: 5%;
+}
+.CardContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+.searchsomething {
+  color: #fff;
+  font-size: 150%;
+}
