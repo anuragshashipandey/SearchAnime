@@ -10,7 +10,7 @@ function App() {
       <Header />
       <CardContainer />
       <p className="load" onClick={() => dispatch(loadMore())}>
-        Load More
+        Load More...
       </p>
     </div>
   );

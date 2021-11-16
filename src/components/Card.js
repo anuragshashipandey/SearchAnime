@@ -4,7 +4,9 @@ function Card({ imgUri, title }) {
   return (
     <div className="card">
       <img className="cardimg" src={imgUri} alt="Img_Card" />
-      <p className="title">{title}</p>
+      <div className="title_container">
+        <p className="title">{title}</p>
+      </div>
     </div>
   );
 }

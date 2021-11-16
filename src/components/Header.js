@@ -8,6 +8,7 @@ import { setList } from "../actions/index";
 import loadMoreCard from "../reducers/loadMore";
 import { reset } from "../actions/index";
 import { withStyles } from "@material-ui/core/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const WhiteTextField = withStyles({
   root: {
@@ -23,6 +24,7 @@ const WhiteTextField = withStyles({
 function Header() {
   const dispatch = useDispatch();
   const [txt, setTxt] = useState("");
+  const [searchtxt, setSearchTxt] = useState("");
   const [list, setL] = useState("");
   const listLen = useSelector((state) => state.loadMoreCard);
   const apiUrl = "https://api.jikan.moe/v3/search/anime?q=";
@@ -45,6 +47,7 @@ function Header() {
             setL(tmpList);
             console.log("tmplist", tmpList);
             dispatch(setList(tmpList));
+            setSearchTxt(txt);
           }
         })
         .catch((err) => console.log(err));
@@ -68,13 +71,25 @@ function Header() {
           value={txt}
           onChange={(e) => setTxt(e.target.value)}
           style={{ borderColor: "white" }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <p
+                  onClick={handleSubmit}
+                  style={{ color: "#fff", cursor: "pointer" }}
+                >
+                  Go
+                </p>
+              </InputAdornment>
+            ),
+          }}
         />
       </form>
       {list == "" ? (
         ""
       ) : (
         <p className="searchDetails">
-          Requesting:{apiUrl}${txt}&limit={listLen}
+          Requesting:{apiUrl}${searchtxt}&limit={listLen}
         </p>
       )}
     </div>
