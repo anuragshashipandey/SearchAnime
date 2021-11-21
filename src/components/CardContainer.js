@@ -7,8 +7,8 @@ function CardContainer() {
   const list = useSelector((state) => state.cardList);
   return (
     <div className="CardContainer">
-      {console.log("list ", list)}
-      {list === 0 ? (
+      {/* {console.log("list ", list)} */}
+      {!list.length ? (
         <p className="searchsomething">Search Something...</p>
       ) : (
         list?.map((item) => (

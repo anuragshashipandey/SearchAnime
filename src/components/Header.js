@@ -5,8 +5,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setList } from "../actions/index";
-import loadMoreCard from "../reducers/loadMore";
 import { reset } from "../actions/index";
+
 import { withStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
@@ -26,19 +26,21 @@ const WhiteTextField = withStyles({
 function Header() {
   const dispatch = useDispatch();
   const [txt, setTxt] = useState("");
-  const [searchtxt, setSearchTxt] = useState("");
+  let [searchtxt, setSearchTxt] = useState("");
   const [list, setL] = useState("");
-  const listLen = useSelector((state) => state.loadMoreCard);
+  let pageNum = useSelector((state) => state.load);
+  const listCard = useSelector((state) => state.cardList);
   const apiUrl = "https://api.jikan.moe/v3/search/anime?q=";
   const getCards = () => {
-    if (!!txt)
+    console.log(searchtxt);
+    if (!!searchtxt)
       axios
-        .get(`${apiUrl}${txt}&limit=${listLen}`)
+        .get(`${apiUrl}${searchtxt}&limit=16&page=${pageNum}`)
         .then((res) => {
           if (res.data.total === 0);
           else {
             console.log(res);
-            let tmpList = [];
+            let tmpList = [...(pageNum === 1 ? [] : listCard)];
             res.data.results.map(
               (item) =>
                 (tmpList = [
@@ -47,22 +49,24 @@ function Header() {
                 ])
             );
             setL(tmpList);
-            console.log("tmplist", tmpList);
-            dispatch(setList(tmpList));
-            setSearchTxt(txt);
+            dispatch(setList([...tmpList]));
           }
         })
         .catch((err) => console.log(err));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    searchtxt = txt;
+    setSearchTxt(searchtxt);
     window.scrollTo(0, 0);
     dispatch(reset());
+    pageNum = 1;
     getCards();
+    setTxt("");
   };
   useEffect(() => {
-    getCards();
-  }, [listLen]);
+    if (pageNum !== 1) getCards();
+  }, [pageNum]);
 
   return (
     <div className="header">
@@ -91,7 +95,7 @@ function Header() {
         ""
       ) : (
         <p className="searchDetails">
-          Requesting:{apiUrl}${searchtxt}&limit={listLen}
+          Requesting:{apiUrl}${searchtxt}&limit=16&page={pageNum}
         </p>
       )}
     </div>

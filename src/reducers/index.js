@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import loadMoreCard from "./loadMore";
+import load from "./Load";
 import cardList from "./cardList";
 const rootReducer = combineReducers({
-  loadMoreCard,
+  load,
   cardList,
 });
 
