@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TextField from "@material-ui/core/TextField";
 import "../styles/Header.css";
 import axios from "axios";
@@ -31,7 +31,7 @@ function Header() {
   let pageNum = useSelector((state) => state.load);
   const listCard = useSelector((state) => state.cardList);
   const apiUrl = "https://api.jikan.moe/v3/search/anime?q=";
-  const getCards = () => {
+  const getCards = useCallback(() => {
     console.log(searchtxt);
     if (!!searchtxt)
       axios
@@ -53,7 +53,7 @@ function Header() {
           }
         })
         .catch((err) => console.log(err));
-  };
+  },[searchtxt, pageNum]);
   const handleSubmit = (e) => {
     e.preventDefault();
     searchtxt = txt;
